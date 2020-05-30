@@ -54,7 +54,7 @@ function PkmnYellowApp() {
                         name="sprite-size"
                         min=".25"
                         max="10"
-                        step=".25"
+                        step=".01"
                         value={spriteSize}
                         onChange={e => setSpriteSize(e.target.value)}
                     />
