@@ -10,6 +10,7 @@ function PkmnYellowApp() {
     const [pkmn, setPkmn] = useLocalStorage("pkmn", initialPkmn);
     // const [pkmn, setPkmn] = useState(initialPkmn);
     const [spriteSize, setSpriteSize] = useLocalStorage("sprite-size", 2);
+    const [backgroundColor, setBackgroundColor] = useLocalStorage("background-color", "#00ff00");
 
     const catchPokemon = id => {
         let p = pkmn[id - 1];
@@ -32,7 +33,7 @@ function PkmnYellowApp() {
     }, 0);
 
     return (
-        <div className="pkmn-app">
+        <div className="pkmn-app" style={{backgroundColor: backgroundColor}}>
             <div className="controls">
                 <div className="option">
                     <button
@@ -56,6 +57,16 @@ function PkmnYellowApp() {
                         onChange={e => setSpriteSize(e.target.value)}
                     />
                 </div>
+                <div className="option">
+                    <label style={{display: "block", textAlign: "center"}} htmlFor="color">Background Color</label>
+                    <input
+                        type="color"
+                        className="input is-small is-fullwidth"
+                        id="color-picker"
+                        value={backgroundColor}
+                        onChange={e => setBackgroundColor(e.target.value)}
+                    />
+                </div>
             </div>
             <div className="pkmn-container section">
                 {pkmn && pkmn.map(pokemon => {
@@ -69,6 +80,7 @@ function PkmnYellowApp() {
                 })}
                 <div
                     className="pokemon"
+                    style={{margin: "auto"}}
                 >
                     <div className="sprite" style={{
                         display: "flex",
