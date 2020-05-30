@@ -11,6 +11,7 @@ function PkmnYellowApp() {
     // const [pkmn, setPkmn] = useState(initialPkmn);
     const [spriteSize, setSpriteSize] = useLocalStorage("sprite-size", 2);
     const [backgroundColor, setBackgroundColor] = useLocalStorage("background-color", "#00ff00");
+    const [showOptions, setShowOptions] = useLocalStorage("show-options", true);
 
     const catchPokemon = id => {
         let p = pkmn[id - 1];
@@ -34,40 +35,47 @@ function PkmnYellowApp() {
 
     return (
         <div className="pkmn-app" style={{backgroundColor: backgroundColor}}>
-            <div className="controls">
-                <div className="option">
-                    <button
-                        className="button is-small"
-                        onClick={resetState}
-                    >
-                        Reset
-                    </button>
-                </div>
-                <div className="option">
-                    <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size</label>
-                    <input
-                        type="number"
-                        className="input is-small is-fullwidth"
-                        id="sprite-size"
-                        name="sprite-size"
-                        min=".25"
-                        max="10"
-                        step=".01"
-                        value={spriteSize}
-                        onChange={e => setSpriteSize(e.target.value)}
-                    />
-                </div>
-                <div className="option">
-                    <label style={{display: "block", textAlign: "center"}} htmlFor="color">Background Color</label>
-                    <input
-                        type="color"
-                        className="input is-small is-fullwidth"
-                        id="color-picker"
-                        value={backgroundColor}
-                        onChange={e => setBackgroundColor(e.target.value)}
-                    />
-                </div>
+            <div className="has-text-centered">
+                <span onClick={() => setShowOptions(!showOptions)} style={{cursor: "pointer"}}>
+                    {showOptions ? "Hide" : "Show"} options
+                </span>
             </div>
+            {showOptions &&
+                <div className="controls">
+                    <div className="option">
+                        <button
+                            className="button is-small"
+                            onClick={resetState}
+                        >
+                            Reset
+                        </button>
+                    </div>
+                    <div className="option">
+                        <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size</label>
+                        <input
+                            type="number"
+                            className="input is-small is-fullwidth"
+                            id="sprite-size"
+                            name="sprite-size"
+                            min=".25"
+                            max="10"
+                            step=".01"
+                            value={spriteSize}
+                            onChange={e => setSpriteSize(e.target.value)}
+                        />
+                    </div>
+                    <div className="option">
+                        <label style={{display: "block", textAlign: "center"}} htmlFor="color">Background Color</label>
+                        <input
+                            type="color"
+                            className="input is-small is-fullwidth"
+                            id="color-picker"
+                            value={backgroundColor}
+                            onChange={e => setBackgroundColor(e.target.value)}
+                        />
+                    </div>
+                </div>
+            }
             <div className="pkmn-container section">
                 {pkmn && pkmn.map(pokemon => {
                     if (!pokemon) return null;
