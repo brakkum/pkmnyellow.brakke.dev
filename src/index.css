@@ -32,11 +32,11 @@ code {
 .pkmn-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .pokemon {
-  margin: 10px;
+  margin: 5px;
   image-rendering: auto;
   image-rendering: crisp-edges;
   image-rendering: pixelated;

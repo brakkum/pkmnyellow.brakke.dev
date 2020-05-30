@@ -24,7 +24,6 @@ const Pokemon = ({pokemon, catchPokemon, spriteSize}) => {
                 backgroundImage: `url(${pokemon.sprite})`,
             }}
         >
-            <span className="pokemon-id">{pokemon.id}</span>
         </div>
     </div>
 };

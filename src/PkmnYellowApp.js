@@ -46,14 +46,15 @@ function PkmnYellowApp() {
                     </button>
                 </div>
                 <div className="option">
-                    <label htmlFor="points">Sprite Size: {spriteSize}</label>
+                    <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size: {spriteSize}</label>
                     <input
                         type="range"
                         className="slider is-fullwidth"
                         id="sprite-size"
                         name="sprite-size"
-                        min="1"
+                        min=".25"
                         max="10"
+                        step=".25"
                         value={spriteSize}
                         onChange={e => setSpriteSize(e.target.value)}
                     />
