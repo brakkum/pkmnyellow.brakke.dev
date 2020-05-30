@@ -5,9 +5,71 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(to bottom right, #e1a799, #ccc871);
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.controls {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .option {
+  margin: 0 10px;
+}
+
+.controls input {
+  margin: 0 5px;
+}
+
+.pkmn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pokemon {
+  margin: 10px;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  padding: 3px;
+  transition: background-color .2s;
+  border-radius: 4px;
+}
+
+.pokemon-id {
+  position: absolute;
+  line-height: initial;
+  font-weight: bold;
+  padding: 2px;
+  background-color: white;
+  border-radius: 4px;
+  opacity: 0;
+  transition: .2s;
+}
+
+.hovered .pokemon-id {
+  opacity: 1;
+}
+
+.pokemon .sprite {
+  background-size: cover;
+  transition: .3s;
+  filter: saturate(0);
+}
+
+.pokemon.caught .sprite {
+  filter: saturate(1);
+}
+
+.pokemon.hovered {
+  background-color: #b4c0ff;
 }
