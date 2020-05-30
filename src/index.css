@@ -45,38 +45,32 @@ code {
   image-rendering: pixelated;
   /*padding: 3px;*/
   transition: background-color .2s;
-  border-radius: 4px;
 }
 
-.pokemon-id {
-  position: absolute;
-  line-height: initial;
-  font-weight: bold;
-  padding: 2px;
-  background-color: white;
+.background {
   border-radius: 4px;
-  opacity: 0;
   transition: .2s;
 }
 
-.hovered .pokemon-id {
-  opacity: 1;
+.background.hovered {
+  background-color: #b4c0ff;
 }
 
 .pokemon .sprite {
   background-size: cover;
-  transition: .3s;
+  transition: .5s;
   filter: saturate(0);
 }
 
 .pokemon.not-caught {
   filter: brightness(50%);
+  transition: .3s;
+}
+
+.pokemon.caught {
+  filter: brightness(100%);
 }
 
 .pokemon.caught .sprite {
   filter: saturate(1);
-}
-
-.pokemon.hovered {
-  background-color: #b4c0ff;
 }
