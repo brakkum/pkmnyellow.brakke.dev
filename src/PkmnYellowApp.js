@@ -9,7 +9,7 @@ function PkmnYellowApp() {
 
   const [pkmn, setPkmn] = useLocalStorage("pkmn", initialPkmn);
   // const [pkmn, setPkmn] = useState(initialPkmn);
-  const [spriteSize, setSpriteSize] = useLocalStorage("sprite-size", 5);
+  const [spriteSize, setSpriteSize] = useLocalStorage("sprite-size", 2);
 
   const catchPokemon = id => {
       let p = pkmn[id];
