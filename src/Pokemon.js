@@ -10,7 +10,7 @@ const Pokemon = ({pokemon, catchPokemon, spriteSize}) => {
     return <div
         className={
             "pokemon " +
-            (pokemon.caught ? "caught " : "") +
+            (pokemon.caught ? "caught " : "not-caught ") +
             (isHovered ? "hovered" : "")
         }
         ref={hoverRef}

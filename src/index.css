@@ -69,6 +69,10 @@ code {
   filter: saturate(0);
 }
 
+.pokemon.not-caught {
+  filter: brightness(50%);
+}
+
 .pokemon.caught .sprite {
   filter: saturate(1);
 }
