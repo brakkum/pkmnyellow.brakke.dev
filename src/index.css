@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to bottom right, #e1a799, #ccc871);
+  background: #00ff00;
   min-height: 100vh;
 }
 
@@ -26,7 +26,7 @@ code {
 }
 
 .controls input {
-  margin: 0 5px;
+  /*margin: 0 5px;*/
 }
 
 .pkmn-container {
@@ -35,12 +35,15 @@ code {
   justify-content: flex-start;
 }
 
+.pkmn-container.section {
+  padding-top: 0;
+}
+
 .pokemon {
-  margin: 5px;
   image-rendering: auto;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
-  padding: 3px;
+  /*padding: 3px;*/
   transition: background-color .2s;
   border-radius: 4px;
 }

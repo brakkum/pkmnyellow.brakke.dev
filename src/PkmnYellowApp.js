@@ -35,9 +35,6 @@ function PkmnYellowApp() {
         <div className="pkmn-app">
             <div className="controls">
                 <div className="option">
-                    {pkmnCaught} of {pkmn.length}
-                </div>
-                <div className="option">
                     <button
                         className="button is-small"
                         onClick={resetState}
@@ -48,8 +45,8 @@ function PkmnYellowApp() {
                 <div className="option">
                     <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size: {spriteSize}</label>
                     <input
-                        type="range"
-                        className="slider is-fullwidth"
+                        type="number"
+                        className="input is-small is-fullwidth"
                         id="sprite-size"
                         name="sprite-size"
                         min=".25"
@@ -70,6 +67,21 @@ function PkmnYellowApp() {
                         spriteSize={spriteSize}
                     />
                 })}
+                <div
+                    className="pokemon"
+                >
+                    <div className="sprite" style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: `${(spriteSize * 57) * 2}px`,
+                        height: `${spriteSize * 57}px`,
+                        padding: "3px",
+                        textAlign: "center"
+                    }}>
+                        {pkmnCaught} of {pkmn.length}
+                    </div>
+                </div>
             </div>
         </div>
     );
