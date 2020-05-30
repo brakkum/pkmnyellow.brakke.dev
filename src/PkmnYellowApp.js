@@ -43,7 +43,7 @@ function PkmnYellowApp() {
                     </button>
                 </div>
                 <div className="option">
-                    <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size: {spriteSize}</label>
+                    <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size</label>
                     <input
                         type="number"
                         className="input is-small is-fullwidth"
