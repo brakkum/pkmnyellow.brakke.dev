@@ -3,7 +3,7 @@ import initialPkmn from "./initialPkmn";
 import React from 'react';
 import "bulma/css/bulma.min.css";
 import Pokemon from "./Pokemon";
-import './App.css';
+import pkmnNames from "./pkmnNames";
 
 function PkmnYellowApp() {
 
@@ -26,6 +26,15 @@ function PkmnYellowApp() {
         if (window.confirm("You sure, dawg?")) {
             setPkmn(JSON.parse(JSON.stringify(initialPkmn)));
         }
+    };
+
+    const nicknamePokemon = id => {
+        let p = pkmn[id - 1];
+        let name = window.prompt(`Set name for ${pkmnNames[id - 1]}`, p.nickname);
+        p.nickname = name ? name : "";
+        let newPkmn = pkmn;
+        newPkmn[id - 1] = p;
+        setPkmn([...newPkmn]);
     };
 
     // let pkmnCaught = 0;
@@ -97,6 +106,7 @@ function PkmnYellowApp() {
                         key={pokemon.id}
                         pokemon={pokemon}
                         catchPokemon={catchPokemon}
+                        nicknamePokemon={nicknamePokemon}
                         spriteSize={spriteSize}
                     />
                 })}
