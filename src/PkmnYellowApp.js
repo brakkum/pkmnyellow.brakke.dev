@@ -12,6 +12,7 @@ function PkmnYellowApp() {
     const [spriteSize, setSpriteSize] = useLocalStorage("sprite-size", 2);
     const [backgroundColor, setBackgroundColor] = useLocalStorage("background-color", "#00ff00");
     const [showOptions, setShowOptions] = useLocalStorage("show-options", true);
+    const [fontSize, setFontSize] = useLocalStorage("font-size", 16);
 
     const catchPokemon = id => {
         let p = pkmn[id - 1];
@@ -65,6 +66,19 @@ function PkmnYellowApp() {
                         />
                     </div>
                     <div className="option">
+                        <label style={{display: "block", textAlign: "center"}} htmlFor="font-size">Font Size</label>
+                        <input
+                            type="number"
+                            className="input is-small is-fullwidth"
+                            id="font-size"
+                            name="font-size"
+                            min="10"
+                            step="1"
+                            value={fontSize}
+                            onChange={e => setFontSize(e.target.value)}
+                        />
+                    </div>
+                    <div className="option">
                         <label style={{display: "block", textAlign: "center"}} htmlFor="color">Background Color</label>
                         <input
                             type="color"
@@ -94,10 +108,11 @@ function PkmnYellowApp() {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        width: `${(spriteSize * 57) * 2}px`,
+                        // width: `${(spriteSize * 57) * 2}px`,
                         height: `${spriteSize * 57}px`,
                         padding: "3px",
-                        textAlign: "center"
+                        textAlign: "center",
+                        fontSize: `${fontSize}px`,
                     }}>
                         {pkmnCaught} of {pkmn.length}
                     </div>
