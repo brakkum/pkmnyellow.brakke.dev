@@ -4,6 +4,7 @@ import React from 'react';
 import "bulma/css/bulma.min.css";
 import Pokemon from "./Pokemon";
 import pkmnNames from "./pkmnNames";
+import save from "save-file";
 
 function PkmnYellowApp() {
 
@@ -35,6 +36,19 @@ function PkmnYellowApp() {
         let newPkmn = pkmn;
         newPkmn[id - 1] = p;
         setPkmn([...newPkmn]);
+    };
+
+    const downloadData = async () => {
+        let output = `\n`;
+        pkmn.forEach((p, i) => {
+            output += `${pkmnNames[i]}\n`;
+            if (p.nickname) {
+                output += `Nickname: ${p.nickname}\n`;
+            }
+            output += `Caught: ${p.caught}\n`;
+            output += `\n`;
+        });
+        await save(output, "pkmn-yellow.txt");
     };
 
     // let pkmnCaught = 0;
@@ -96,6 +110,14 @@ function PkmnYellowApp() {
                             value={backgroundColor}
                             onChange={e => setBackgroundColor(e.target.value)}
                         />
+                    </div>
+                    <div className="option">
+                        <button
+                            className="button is-small"
+                            onClick={downloadData}
+                        >
+                            Download Data
+                        </button>
                     </div>
                 </div>
             }
