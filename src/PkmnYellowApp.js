@@ -132,7 +132,7 @@ function PkmnYellowApp() {
 
     // let pkmnCaught = 0;
 
-    if (!pkmn) {
+    if (isSpectator && !pkmn) {
         return (
             <h1>One sec...</h1>
         )
