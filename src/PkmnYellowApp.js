@@ -30,6 +30,7 @@ function PkmnYellowApp() {
     if (!isSpectator && dKey) {
         let key = !dataKey ? getDKeyParam() : dataKey;
         fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
+            credentials: 'include',
         })
             .then(res => res.json())
             .then(json => {
@@ -45,6 +46,7 @@ function PkmnYellowApp() {
         if (isSpectator) {
             let key = !dataKey ? getDKeyParam() : dataKey;
             fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
+                credentials: 'include',
             })
                 .then(res => res.json())
                 .then(json => {
@@ -60,6 +62,7 @@ function PkmnYellowApp() {
         fetch(`${apiBaseUrl}/set_pokemon_data.php`, {
             method: "post",
             mode: "cors",
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 "key": dataKey,
@@ -112,7 +115,9 @@ function PkmnYellowApp() {
     // };
 
     const getDataKeyInfo = () => {
-        fetch(`${apiBaseUrl}/get_new_data_key.php`)
+        fetch(`${apiBaseUrl}/get_new_data_key.php`, {
+            credentials: 'include',
+        })
             .then(res => res.json())
             .then(json => {
                 if (json.success) {
