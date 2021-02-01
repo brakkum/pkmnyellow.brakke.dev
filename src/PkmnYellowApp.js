@@ -28,6 +28,16 @@ function PkmnYellowApp() {
     const apiBaseUrl = isProd() ? "" : "http://pkmndev:8888";
     const dKey = getDKeyParam();
     if (!isSpectator && dKey) {
+        let key = !dataKey ? getDKeyParam() : dataKey;
+        fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    setPkmn(json.data);
+                }
+            })
+            .catch(e => console.log(e))
         setIsSpectator(true);
     }
 
