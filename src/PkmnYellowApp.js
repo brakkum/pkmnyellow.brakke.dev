@@ -122,7 +122,13 @@ function PkmnYellowApp() {
     }
 
     // let pkmnCaught = 0;
-    // let pReduce = pkmn && pkmn.length ? pkmn : [];
+
+    if (!pkmn) {
+        return (
+            <h1>One sec...</h1>
+        )
+    }
+
     let pkmnCaught = pkmn.reduce((pkmnCaught, pokemon) => {
         if (!pokemon) return 0;
         return pokemon.caught === true ? pkmnCaught + 1 : pkmnCaught;
