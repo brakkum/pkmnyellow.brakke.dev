@@ -31,6 +31,7 @@ function PkmnYellowApp() {
         let key = !dataKey ? getDKeyParam() : dataKey;
         fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
             credentials: 'include',
+            cache: "no-store",
         })
             .then(res => res.json())
             .then(json => {
@@ -47,6 +48,7 @@ function PkmnYellowApp() {
             let key = !dataKey ? getDKeyParam() : dataKey;
             fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
                 credentials: 'include',
+                cache: "no-store",
             })
                 .then(res => res.json())
                 .then(json => {
@@ -62,6 +64,7 @@ function PkmnYellowApp() {
         fetch(`${apiBaseUrl}/set_pokemon_data.php`, {
             method: "post",
             mode: "cors",
+            cache: "no-store",
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -117,6 +120,7 @@ function PkmnYellowApp() {
     const getDataKeyInfo = () => {
         fetch(`${apiBaseUrl}/get_new_data_key.php`, {
             credentials: 'include',
+            cache: "no-store",
         })
             .then(res => res.json())
             .then(json => {
