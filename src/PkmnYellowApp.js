@@ -1,10 +1,10 @@
 import useLocalStorage from "./hooks/useLocalStorage";
 import initialPkmn from "./initialPkmn";
-import React from 'react';
+import React, {useState} from 'react';
 import "bulma/css/bulma.min.css";
 import Pokemon from "./Pokemon";
 import pkmnNames from "./pkmnNames";
-import save from "save-file";
+import {useInterval} from "./hooks/useInterval";
 
 function PkmnYellowApp() {
 
@@ -14,6 +14,48 @@ function PkmnYellowApp() {
     const [backgroundColor, setBackgroundColor] = useLocalStorage("background-color", "#00ff00");
     const [showOptions, setShowOptions] = useLocalStorage("show-options", true);
     const [fontSize, setFontSize] = useLocalStorage("font-size", 16);
+    const [dataKey, setDataKey] = useLocalStorage("data-key", "");
+    const [isSpectator, setIsSpectator] = useState(false);
+
+    const getPathWithoutSlash = () => {
+        let path = window.location.pathname;
+        return path[0] === '/' ? path.substr(1) : path;
+    };
+
+    const isProd = () => window.location.href.includes("pkmnyellow");
+    const hasDatabaseRecord = dataKey !== "";
+    const apiBaseUrl = isProd() ? "" : "http://pkmndev:8888";
+    const dKey = getPathWithoutSlash();
+    if (!isSpectator && dKey) {
+        setIsSpectator(true);
+    }
+
+    useInterval(() => {
+        if (isSpectator) {
+            let key = !dataKey ? getPathWithoutSlash() : dataKey;
+            fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
+            })
+                .then(res => res.json())
+                .then(json => {
+                    if (json.success) {
+                        setPkmn(json.data);
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+    }, 1_000);
+
+    const updateRecord = () => {
+        fetch(`${apiBaseUrl}/set_pokemon_data.php`, {
+            method: "post",
+            mode: "cors",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "key": dataKey,
+                "data": pkmn,
+            }),
+        }).then().catch(e => console.log(e))
+    };
 
     const catchPokemon = id => {
         let p = pkmn[id - 1];
@@ -21,11 +63,15 @@ function PkmnYellowApp() {
         let newPkmn = pkmn;
         newPkmn[id - 1] = p;
         setPkmn([...newPkmn]);
+        if (hasDatabaseRecord) {
+            updateRecord();
+        }
     };
 
     const resetState = () => {
         if (window.confirm("You sure, dawg?")) {
             setPkmn(JSON.parse(JSON.stringify(initialPkmn)));
+            setDataKey("");
         }
     };
 
@@ -36,22 +82,36 @@ function PkmnYellowApp() {
         let newPkmn = pkmn;
         newPkmn[id - 1] = p;
         setPkmn([...newPkmn]);
+        if (hasDatabaseRecord) {
+            updateRecord();
+        }
     };
 
-    const downloadData = async () => {
-        let output = `\n`;
-        pkmn.forEach((p, i) => {
-            output += `${pkmnNames[i]}\n`;
-            if (p.nickname) {
-                output += `Nickname: ${p.nickname}\n`;
-            }
-            output += `Caught: ${p.caught}\n`;
-            output += `\n`;
-        });
-        await save(output, "pkmn-yellow.txt");
-    };
+    // const downloadData = async () => {
+    //     let output = `\n`;
+    //     pkmn.forEach((p, i) => {
+    //         output += `${pkmnNames[i]}\n`;
+    //         if (p.nickname) {
+    //             output += `Nickname: ${p.nickname}\n`;
+    //         }
+    //         output += `Caught: ${p.caught}\n`;
+    //         output += `\n`;
+    //     });
+    //     await save(output, "pkmn-yellow.txt");
+    // };
+
+    const getDataKeyInfo = () => {
+        fetch(`${apiBaseUrl}/get_new_data_key.php`)
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    setDataKey(json.key);
+                }
+            }).catch(e => console.log(e))
+    }
 
     // let pkmnCaught = 0;
+    // let pReduce = pkmn && pkmn.length ? pkmn : [];
     let pkmnCaught = pkmn.reduce((pkmnCaught, pokemon) => {
         if (!pokemon) return 0;
         return pokemon.caught === true ? pkmnCaught + 1 : pkmnCaught;
@@ -66,14 +126,14 @@ function PkmnYellowApp() {
             </div>
             {showOptions &&
                 <div className="controls">
-                    <div className="option">
+                    {!isSpectator && <div className="option">
                         <button
                             className="button is-small"
                             onClick={resetState}
                         >
                             Reset
                         </button>
-                    </div>
+                    </div>}
                     <div className="option">
                         <label style={{display: "block", textAlign: "center"}} htmlFor="points">Sprite Size</label>
                         <input
@@ -111,14 +171,19 @@ function PkmnYellowApp() {
                             onChange={e => setBackgroundColor(e.target.value)}
                         />
                     </div>
-                    <div className="option">
-                        <button
-                            className="button is-small"
-                            onClick={downloadData}
-                        >
-                            Download Data
-                        </button>
-                    </div>
+                    {!isSpectator && <div className="option">
+                        {
+                            dataKey ?
+                                `Data Key: ${dataKey}`
+                                :
+                                <button
+                                    className="button is-small"
+                                    onClick={getDataKeyInfo}
+                                >
+                                    Share Tracker Data
+                                </button>
+                        }
+                    </div>}
                 </div>
             }
             <div className="pkmn-container section">
@@ -130,6 +195,7 @@ function PkmnYellowApp() {
                         catchPokemon={catchPokemon}
                         nicknamePokemon={nicknamePokemon}
                         spriteSize={spriteSize}
+                        isSpectator={isSpectator}
                     />
                 })}
                 <div

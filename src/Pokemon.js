@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-const Pokemon = ({pokemon, catchPokemon, nicknamePokemon, spriteSize}) => {
+const Pokemon = ({pokemon, catchPokemon, nicknamePokemon, spriteSize, isSpectator}) => {
 
     let dimension = spriteSize * 57;
     const [isHovered, setIsHovered] = useState(false);
@@ -18,7 +18,7 @@ const Pokemon = ({pokemon, catchPokemon, nicknamePokemon, spriteSize}) => {
                     (pokemon.caught ? "caught " : "not-caught ")
                 }
             >
-                {isHovered ?
+                {!isSpectator && isHovered ?
                     <div
                         className="pokemon-items"
                     >
