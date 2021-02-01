@@ -71,7 +71,7 @@ function PkmnYellowApp() {
                 "key": dataKey,
                 "data": pkmn,
             }),
-        }).then().catch(e => console.log(e))
+        }).catch(e => console.log(e))
     };
 
     const catchPokemon = id => {
@@ -126,6 +126,17 @@ function PkmnYellowApp() {
             .then(json => {
                 if (json.success) {
                     setDataKey(json.key);
+                    fetch(`${apiBaseUrl}/set_pokemon_data.php`, {
+                        method: "post",
+                        mode: "cors",
+                        cache: "no-store",
+                        credentials: 'include',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            "key": json.key,
+                            "data": pkmn,
+                        }),
+                    }).catch(e => console.log(e))
                 }
             }).catch(e => console.log(e))
     }
