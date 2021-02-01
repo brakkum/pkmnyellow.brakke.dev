@@ -36,7 +36,7 @@ function PkmnYellowApp() {
             .then(res => res.json())
             .then(json => {
                 if (json.success) {
-                    setPkmn(json.data);
+                    setPkmn([...json.data]);
                 }
             })
             .catch(e => console.log(e))
