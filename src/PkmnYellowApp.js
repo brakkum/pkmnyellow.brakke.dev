@@ -56,7 +56,7 @@ function PkmnYellowApp() {
                 })
                 .catch(e => console.log(e))
         }
-    }, 1_000);
+    }, 1000);
 
     const updateRecord = () => {
         fetch(`${apiBaseUrl}/set_pokemon_data.php`, {
