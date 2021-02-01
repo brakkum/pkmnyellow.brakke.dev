@@ -17,22 +17,23 @@ function PkmnYellowApp() {
     const [dataKey, setDataKey] = useLocalStorage("data-key", "");
     const [isSpectator, setIsSpectator] = useState(false);
 
-    const getPathWithoutSlash = () => {
-        let path = window.location.pathname;
-        return path[0] === '/' ? path.substr(1) : path;
+    const getDKeyParam = () => {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+        return params.get("dkey");
     };
 
     const isProd = () => window.location.href.includes("pkmnyellow");
     const hasDatabaseRecord = dataKey !== "";
     const apiBaseUrl = isProd() ? "" : "http://pkmndev:8888";
-    const dKey = getPathWithoutSlash();
+    const dKey = getDKeyParam();
     if (!isSpectator && dKey) {
         setIsSpectator(true);
     }
 
     useInterval(() => {
         if (isSpectator) {
-            let key = !dataKey ? getPathWithoutSlash() : dataKey;
+            let key = !dataKey ? getDKeyParam() : dataKey;
             fetch(`${apiBaseUrl}/get_pokemon_data.php?key=${key}`, {
             })
                 .then(res => res.json())
@@ -174,7 +175,7 @@ function PkmnYellowApp() {
                     {!isSpectator && <div className="option">
                         {
                             dataKey ?
-                                `Data Key: ${dataKey}`
+                                `Shareable Tracker: https://pkmnyellow.brakke.dev/?dkey=${dataKey}`
                                 :
                                 <button
                                     className="button is-small"
